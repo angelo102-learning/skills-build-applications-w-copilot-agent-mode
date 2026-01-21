@@ -13,7 +13,7 @@ class User(models.Model):
 class Team(models.Model):
     name = models.CharField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    members = models.ArrayReferenceField(to=User, on_delete=models.CASCADE)
+    members = models.ArrayReferenceField(to=User, on_delete=models.CASCADE, related_name='teams')
     def __str__(self):
         return self.name
 
