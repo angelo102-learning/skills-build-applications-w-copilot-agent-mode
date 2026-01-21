@@ -35,37 +35,54 @@ const Users = () => {
     fetchUsers();
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading users...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) return (
+    <div className="container">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading users...</span>
+      </div>
+      <p className="mt-2">Loading users...</p>
+    </div>
+  );
+  if (error) return (
+    <div className="container">
+      <div className="alert alert-danger" role="alert">
+        <strong>Error:</strong> {error}
+      </div>
+    </div>
+  );
 
   return (
-    <div className="container mt-5">
-      <h2>Users</h2>
+    <div className="container">
+      <h1 className="mb-4">👥 Users</h1>
       {users.length === 0 ? (
-        <p>No users found</p>
+        <div className="alert alert-info" role="alert">
+          No users found.
+        </div>
       ) : (
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.first_name}</td>
-                <td>{user.last_name}</td>
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td><strong>{user.id}</strong></td>
+                  <td><strong>{user.username}</strong></td>
+                  <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
+                  <td>{user.first_name || 'N/A'}</td>
+                  <td>{user.last_name || 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -35,30 +35,85 @@ const Workouts = () => {
     fetchWorkouts();
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading workouts...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) return (
+    <div className="container">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading workouts...</span>
+      </div>
+      <p className="mt-2">Loading workouts...</p>
+    </div>
+  );
+  if (error) return (
+    <div className="container">
+      <div className="alert alert-danger" role="alert">
+        <strong>Error:</strong> {error}
+      </div>
+    </div>
+  );
 
   return (
-    <div className="container mt-5">
-      <h2>Workouts</h2>
+    <div className="container">
+      <h1 className="mb-4">💪 Workouts</h1>
       {workouts.length === 0 ? (
-        <p>No workouts found</p>
+        <div className="alert alert-info" role="alert">
+          No workouts found. Create your first workout!
+        </div>
       ) : (
         <div className="row">
-          {workouts.map((workout) => (
-            <div key={workout.id} className="col-md-4 mb-3">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{workout.name}</h5>
-                  <p className="card-text">{workout.description}</p>
-                  {workout.difficulty && <p className="card-text">Difficulty: <strong>{workout.difficulty}</strong></p>}
-                  {workout.duration && <p className="card-text">Duration: {workout.duration} mins</p>}
-                  {workout.exercises && <p className="card-text">Exercises: {workout.exercises}</p>}
-                  {workout.created_at && <p className="card-text small text-muted">Created: {new Date(workout.created_at).toLocaleDateString()}</p>}
+          {workouts.map((workout) => {
+            let difficultyClass = 'bg-info';
+            if (workout.difficulty) {
+              const difficulty = workout.difficulty.toLowerCase();
+              if (difficulty === 'easy') difficultyClass = 'bg-success';
+              else if (difficulty === 'medium') difficultyClass = 'bg-warning';
+              else if (difficulty === 'hard') difficultyClass = 'bg-danger';
+            }
+            
+            return (
+              <div key={workout.id} className="col-md-6 col-lg-4 mb-4">
+                <div className="card h-100">
+                  <div className="card-header">
+                    <h5 className="card-title mb-0">{workout.name}</h5>
+                  </div>
+                  <div className="card-body">
+                    <p className="card-text text-muted">{workout.description || 'No description provided'}</p>
+                    <hr />
+                    <div className="mb-3">
+                      {workout.difficulty && (
+                        <p className="mb-2">
+                          <small className="text-muted">Difficulty</small>
+                          <br />
+                          <span className={`badge ${difficultyClass}`}>{workout.difficulty}</span>
+                        </p>
+                      )}
+                      {workout.duration && (
+                        <p className="mb-2">
+                          <small className="text-muted">Duration</small>
+                          <br />
+                          <span className="badge bg-primary">{workout.duration} mins</span>
+                        </p>
+                      )}
+                      {workout.exercises && (
+                        <p className="mb-0">
+                          <small className="text-muted">Exercises</small>
+                          <br />
+                          <span className="badge bg-secondary">{workout.exercises}</span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="card-footer bg-light">
+                    <small className="text-muted">
+                      Created: {workout.created_at ? new Date(workout.created_at).toLocaleDateString() : 'N/A'}
+                    </small>
+                  </div>
+                  <div className="card-footer bg-light">
+                    <button className="btn btn-primary btn-sm w-100">Start Workout</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

@@ -35,35 +35,87 @@ const Leaderboard = () => {
     fetchLeaderboard();
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading leaderboard...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) return (
+    <div className="container">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading leaderboard...</span>
+      </div>
+      <p className="mt-2">Loading leaderboard...</p>
+    </div>
+  );
+  if (error) return (
+    <div className="container">
+      <div className="alert alert-danger" role="alert">
+        <strong>Error:</strong> {error}
+      </div>
+    </div>
+  );
 
   return (
-    <div className="container mt-5">
-      <h2>Leaderboard</h2>
+    <div className="container">
+      <h1 className="mb-4">🏆 Leaderboard</h1>
       {leaderboard.length === 0 ? (
-        <p>No leaderboard data found</p>
+        <div className="alert alert-info" role="alert">
+          No leaderboard data found yet.
+        </div>
       ) : (
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>User</th>
-              <th>Points</th>
-              <th>Workouts</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaderboard.map((entry, index) => (
-              <tr key={entry.id || index}>
-                <td>{index + 1}</td>
-                <td>{entry.user_name || entry.username || entry.name || 'Unknown'}</td>
-                <td>{entry.points || entry.score || 0}</td>
-                <td>{entry.workout_count || entry.workouts || 0}</td>
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th style={{width: '80px'}}>
+                  <strong>Rank</strong>
+                </th>
+                <th>
+                  <strong>User</strong>
+                </th>
+                <th style={{width: '120px'}}>
+                  <strong>Points</strong>
+                </th>
+                <th style={{width: '120px'}}>
+                  <strong>Workouts</strong>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {leaderboard.map((entry, index) => {
+                const rank = index + 1;
+                let badgeClass = 'badge-primary';
+                let medalIcon = '🥇';
+                
+                if (rank === 1) {
+                  badgeClass = 'badge-primary';
+                  medalIcon = '🥇';
+                } else if (rank === 2) {
+                  badgeClass = 'badge-secondary';
+                  medalIcon = '🥈';
+                } else if (rank === 3) {
+                  badgeClass = 'badge-warning';
+                  medalIcon = '🥉';
+                }
+                
+                return (
+                  <tr key={entry.id || index}>
+                    <td>
+                      <span className={`badge ${badgeClass}`}>
+                        {medalIcon} #{rank}
+                      </span>
+                    </td>
+                    <td>
+                      <strong>{entry.user_name || entry.username || entry.name || 'Unknown'}</strong>
+                    </td>
+                    <td>
+                      <strong>{entry.points || entry.score || 0}</strong>
+                    </td>
+                    <td>
+                      <span className="badge bg-info">{entry.workout_count || entry.workouts || 0}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -35,28 +35,53 @@ const Activities = () => {
     fetchActivities();
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading activities...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) return (
+    <div className="container">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading activities...</span>
+      </div>
+      <p className="mt-2">Loading activities...</p>
+    </div>
+  );
+  if (error) return (
+    <div className="container">
+      <div className="alert alert-danger" role="alert">
+        <strong>Error:</strong> {error}
+      </div>
+    </div>
+  );
 
   return (
-    <div className="container mt-5">
-      <h2>Activities</h2>
+    <div className="container">
+      <h1 className="mb-4">📊 Activities</h1>
       {activities.length === 0 ? (
-        <p>No activities found</p>
+        <div className="alert alert-info" role="alert">
+          No activities found. Create your first activity!
+        </div>
       ) : (
-        <div className="row">
-          {activities.map((activity) => (
-            <div key={activity.id} className="col-md-4 mb-3">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{activity.name}</h5>
-                  <p className="card-text">{activity.description}</p>
-                  {activity.duration && <p className="card-text">Duration: {activity.duration} mins</p>}
-                  {activity.calories && <p className="card-text">Calories: {activity.calories}</p>}
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>Activity Name</th>
+                <th>Description</th>
+                <th>Duration (mins)</th>
+                <th>Calories</th>
+              </tr>
+            </thead>
+            <tbody>
+              {activities.map((activity) => (
+                <tr key={activity.id}>
+                  <td>
+                    <strong>{activity.name}</strong>
+                  </td>
+                  <td>{activity.description || 'N/A'}</td>
+                  <td>{activity.duration ? activity.duration : 'N/A'}</td>
+                  <td>{activity.calories ? <span className="badge badge-primary">{activity.calories}</span> : 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

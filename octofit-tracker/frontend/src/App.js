@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               🐙 OctoFit Tracker
@@ -75,17 +75,28 @@ function App() {
           <Route
             path="/"
             element={
-              <div className="container mt-5">
-                <div className="jumbotron">
-                  <h1 className="display-4">Welcome to OctoFit Tracker</h1>
-                  <p className="lead">
+              <div className="container">
+                <div className="bg-light-gradient p-5 rounded">
+                  <h1 className="display-4 text-center mb-4">🐙 Welcome to OctoFit Tracker</h1>
+                  <p className="lead text-center mb-4">
                     Track your fitness activities, compete with teams, and achieve your goals!
                   </p>
                   <hr className="my-4" />
-                  <p>
-                    Use the navigation menu above to explore activities, workouts, teams, and more.
-                  </p>
-                  <p className="text-muted">
+                  <div className="row mt-4">
+                    <div className="col-md-4 text-center mb-3">
+                      <h5>📊 Track Activities</h5>
+                      <p>Log your workouts and monitor your progress</p>
+                    </div>
+                    <div className="col-md-4 text-center mb-3">
+                      <h5>👥 Join Teams</h5>
+                      <p>Compete with teammates and earn points</p>
+                    </div>
+                    <div className="col-md-4 text-center mb-3">
+                      <h5>🏆 Climb Leaderboard</h5>
+                      <p>Show your fitness dominance</p>
+                    </div>
+                  </div>
+                  <p className="text-muted text-center mt-4">
                     <small>API Base URL: {apiBaseUrl}</small>
                   </p>
                 </div>
