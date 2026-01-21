@@ -5,6 +5,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+console.log('OctoFit Tracker Frontend - Initializing');
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Codespace Name:', process.env.REACT_APP_CODESPACE_NAME || 'localhost');
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
