@@ -13,7 +13,9 @@
       "env": {
         "PYTHONPATH": "${workspaceFolder}/octofit-tracker/backend/venv/bin/python",
         "VIRTUAL_ENV": "${workspaceFolder}/octofit-tracker/backend/venv",
-        "PATH": "${workspaceFolder}/octofit-tracker/backend/venv/bin:${env:PATH}"
+        "PATH": "${workspaceFolder}/octofit-tracker/backend/venv/bin:${env:PATH}",
+        "CODESPACE_NAME": "${env:CODESPACE_NAME}",
+        "DJANGO_SETTINGS_MODULE": "octofit_tracker.settings"
       }
     },
     {
