@@ -21,7 +21,8 @@ function App() {
         <nav className="navbar navbar-expand-lg navbar-dark">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
-              🐙 OctoFit Tracker
+              <img src="/octofit-logo.png" alt="OctoFit Tracker Logo" />
+              <span>OctoFit Tracker</span>
             </Link>
             <button
               className="navbar-toggler"
